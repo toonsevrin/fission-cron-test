@@ -1,0 +1,58 @@
+apiVersion: fission.io/v1
+kind: Package
+metadata:
+  name: fission-cron-test-3930344d-c286-43d7-b701-edea279162b9
+  namespace: default
+  annotations:
+    fission-name: fission-cron-test
+    fission-uid: 6f3da4ab-5f79-4497-ab11-a4bc5ce3a607
+
+spec:
+  environment:
+    name: golang-1-13
+    namespace: default
+  deployment:
+    checksum:
+      sum: 2054ebf61ac2501c2a8041e667d6c08d484d3ff1fba67e75bca43edd20f666c9
+      type: sha256
+    type: url
+    url:  https://raw.githubusercontent.com/toonsevrin/fission-cron-test/6bd4b0055b1c400669360534c8dbf1d3d3c1b3a3/main.go
+  source:
+    checksum:
+      sum: 2054ebf61ac2501c2a8041e667d6c08d484d3ff1fba67e75bca43edd20f666c9
+      type: sha256
+    type: url
+    url:  https://raw.githubusercontent.com/toonsevrin/fission-cron-test/6bd4b0055b1c400669360534c8dbf1d3d3c1b3a3/main.go
+
+status:
+  buildstatus: pending
+---
+apiVersion: fission.io/v1
+kind: Function
+metadata:
+  name: fission-cron-test
+  namespace: default
+  annotations:
+    fission-name: fission-cron-test
+    fission-uid: 6f3da4ab-5f79-4497-ab11-a4bc5ce3a607
+spec:
+  environment:
+    name: golang-1-13
+    namespace: default
+  functionTimeout: 5
+  package:
+    packageref:
+      name: fission-cron-test-3930344d-c286-43d7-b701-edea279162b9
+      namespace: default
+    functionName: Handler
+  InvokeStrategy:
+    ExecutionStrategy:
+      ExecutorType: poolmgr
+      MaxScale: 0
+      MinScale: 0
+      SpecializationTimeout: 120
+      TargetCPUPercent: 0
+    StrategyType: execution
+  configmaps:
+    - name: fission-cron-test
+      namespace: default

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fission-cron-test
+  namespace: default
+data:
+  url: https://32xkjo3gmkc7rsyn.anvil.app/_/private_api/KSLMONZ6OOEFI3GBDQW6HIEK/increment
